@@ -1,0 +1,33 @@
+// prisma/schema.prisma
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL") // This should point to your ElephantSQL instance
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum UserRole {
+  staff
+  guard
+  admin
+}
+
+enum UserStatus {
+  common
+  difficulty
+  disability
+}
+
+model User {
+  id                String   @id @default(uuid())
+  name              String
+  password          String
+  phone             String
+  email             String   @unique
+  licensePlateNumber String[]
+  role              UserRole
+  status            UserStatus
+}
